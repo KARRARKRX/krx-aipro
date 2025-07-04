@@ -1,62 +1,66 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>KRX AI</title>
-    <link rel="stylesheet" href="style.css" />
-    <style>
-      body {
-        margin: 0;
-        font-family: "Tajawal", sans-serif;
-        background: linear-gradient(135deg, #000428, #004e92);
-        color: white;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        text-align: center;
-      }
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KRX AI</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      color: white;
+      text-align: center;
+    }
 
-      h1 {
-        font-size: 3rem;
-        margin-bottom: 0.5em;
-      }
+    #landing {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
 
-      p {
-        font-size: 1.2rem;
-        max-width: 500px;
-        margin-bottom: 2em;
-      }
+    #landing img {
+      width: 120px;
+      margin-bottom: 20px;
+    }
 
-      button {
-        padding: 0.8em 2em;
-        font-size: 1.1rem;
-        background-color: #00c9ff;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: 0.3s;
-      }
+    h1 {
+      font-size: 2.5rem;
+      margin: 10px 0;
+    }
 
-      button:hover {
-        background-color: #00587a;
-        color: white;
-      }
+    p {
+      font-size: 1.1rem;
+      color: #ccc;
+    }
 
-      footer {
-        position: absolute;
-        bottom: 10px;
-        font-size: 0.9rem;
-        color: #ccc;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>👋 أهلاً بك في KRX AI</h1>
-    <p>مساعدك الذكي باللغة العربية – دردش الآن باستخدام أحدث تقنيات الذكاء الاصطناعي!</p>
-    <a href="/chat.html"><button>جرّب الآن</button></a>
-    <footer>مصنوع بحب بواسطة Karrar Alabdali – <a href="https://www.instagram.com/k1.fo" target="_blank" style="color:#00c9ff">@k1.fo</a></footer>
-  </body>
+    .start-btn {
+      margin-top: 30px;
+      padding: 12px 25px;
+      font-size: 1rem;
+      background-color: #00c9ff;
+      border: none;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .start-btn:hover {
+      background-color: #009fd4;
+    }
+  </style>
+</head>
+<body>
+  <div id="landing">
+    <img src="logo.png" alt="KRX AI Logo" />
+    <h1>مرحبا بك في KR-X AI</h1>
+    <p>مساعدك الذكي بلغتك وبأسلوبك. جاهز لكل سؤال ✨</p>
+    <button class="start-btn" onclick="location.href='client/index.html'">جرب الآن</button>
+  </div>
+</body>
 </html>
