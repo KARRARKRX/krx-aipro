@@ -1,20 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KRX AI</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div id="app">
-    <h1>Welcome to KRX AI 🤖</h1>
-    <div id="chat-box"></div>
-    <form id="chat-form">
-      <input type="text" id="user-input" placeholder="Ask me anything..." required />
-      <button type="submit">Send</button>
-    </form>
-  </div>
-  <script src="script.js"></script>
-</body>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KRX AI</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      body {
+        margin: 0;
+        font-family: "Tajawal", sans-serif;
+        background: linear-gradient(135deg, #000428, #004e92);
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 3rem;
+        margin-bottom: 0.5em;
+      }
+
+      p {
+        font-size: 1.2rem;
+        max-width: 500px;
+        margin-bottom: 2em;
+      }
+
+      button {
+        padding: 0.8em 2em;
+        font-size: 1.1rem;
+        background-color: #00c9ff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      button:hover {
+        background-color: #00587a;
+        color: white;
+      }
+
+      footer {
+        position: absolute;
+        bottom: 10px;
+        font-size: 0.9rem;
+        color: #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>👋 أهلاً بك في KRX AI</h1>
+    <p>مساعدك الذكي باللغة العربية – دردش الآن باستخدام أحدث تقنيات الذكاء الاصطناعي!</p>
+    <a href="/chat.html"><button>جرّب الآن</button></a>
+    <footer>مصنوع بحب بواسطة Karrar Alabdali – <a href="https://www.instagram.com/k1.fo" target="_blank" style="color:#00c9ff">@k1.fo</a></footer>
+  </body>
 </html>
