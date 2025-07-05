@@ -1,131 +1,54 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>KRX AI – الدردشة الذكية</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #0f172a;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-    }
+<script>
+  const chatBox = document.getElementById("chat-box");
+  const chatForm = document.getElementById("chat-form");
+  const userInput = document.getElementById("user-input");
 
-    header {
-      padding: 15px;
-      background: #1e293b;
-      text-align: center;
-      font-size: 1.5rem;
-      font-weight: bold;
-      border-bottom: 1px solid #334155;
-    }
+  chatForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const message = userInput.value.trim();
+    if (!message) return;
 
-    #chat-box {
-      flex: 1;
-      padding: 20px;
-      overflow-y: auto;
-    }
+    appendMessage("أنت", message, "user");
+    userInput.value = "";
 
-    .message {
-      margin-bottom: 15px;
-      padding: 10px 15px;
-      border-radius: 12px;
-      max-width: 80%;
-      line-height: 1.5;
-    }
+    const botMsgDiv = appendMessage("KRX AI", "", "bot");
 
-    .user {
-      background-color: #2563eb;
-      align-self: flex-end;
-      margin-left: auto;
-    }
-
-    .bot {
-      background-color: #334155;
-      align-self: flex-start;
-      margin-right: auto;
-    }
-
-    #chat-form {
-      display: flex;
-      padding: 15px;
-      border-top: 1px solid #334155;
-      background: #1e293b;
-    }
-
-    #user-input {
-      flex: 1;
-      padding: 10px 15px;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      margin-left: 10px;
-    }
-
-    button {
-      padding: 10px 20px;
-      background-color: #22d3ee;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      color: #0f172a;
-    }
-
-    button:hover {
-      background-color: #0ea5e9;
-    }
-  </style>
-</head>
-<body>
-  <header>💬 KRX AI</header>
-
-  <div id="chat-box"></div>
-
-  <form id="chat-form">
-    <input type="text" id="user-input" placeholder="اكتب رسالتك هنا..." autocomplete="off" required />
-    <button type="submit">إرسال</button>
-  </form>
-
-  <script>
-    const chatBox = document.getElementById("chat-box");
-    const chatForm = document.getElementById("chat-form");
-    const userInput = document.getElementById("user-input");
-
-    chatForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const message = userInput.value.trim();
-      if (!message) return;
-
-      appendMessage("أنت", message, "user");
-      userInput.value = "";
-
-      try {
-        const response = await fetch('/api/chat', {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ message })
-        });
-
-        const data = await response.json();
-        appendMessage("KRX AI", data.reply || "لم أتمكن من الرد 😔", "bot");
-      } catch (err) {
-        appendMessage("KRX AI", "حدث خطأ أثناء الاتصال بالسيرفر ❌", "bot");
-      }
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ message })
     });
 
-    function appendMessage(sender, message, type) {
-      const msgDiv = document.createElement("div");
-      msgDiv.className = `message ${type}`;
-      msgDiv.textContent = `${sender}: ${message}`;
-      chatBox.appendChild(msgDiv);
-      chatBox.scrollTop = chatBox.scrollHeight;
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder("utf-8");
+
+    let botMessage = "";
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      const chunk = decoder.decode(value);
+      const lines = chunk.split("\n");
+
+      for (const line of lines) {
+        if (line.startsWith("data: ")) {
+          const text = line.replace("data: ", "").trim();
+          if (text === "[DONE]") return;
+          botMessage += text;
+          botMsgDiv.textContent = `KRX AI: ${botMessage}`;
+          chatBox.scrollTop = chatBox.scrollHeight;
+        }
+      }
     }
-  </script>
-</body>
-</html>
+  });
+
+  function appendMessage(sender, message, type) {
+    const msgDiv = document.createElement("div");
+    msgDiv.className = `message ${type}`;
+    msgDiv.textContent = `${sender}: ${message}`;
+    chatBox.appendChild(msgDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+    return msgDiv;
+  }
+</script>
