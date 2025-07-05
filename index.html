@@ -106,13 +106,13 @@
       userInput.value = "";
 
       try {
-        const res = await fetch("/api/chat", {
+        const response = await fetch('/api/chat', {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ message })
         });
 
-        const data = await res.json();
+        const data = await response.json();
         appendMessage("KRX AI", data.reply || "لم أتمكن من الرد 😔", "bot");
       } catch (err) {
         appendMessage("KRX AI", "حدث خطأ أثناء الاتصال بالسيرفر ❌", "bot");

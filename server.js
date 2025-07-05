@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import OpenAI from 'openai';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
 
 dotenv.config();
 
@@ -13,14 +14,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'client')));
 
+// 🧠 ربط الذكاء الصناعي
 app.post('/api/chat', async (req, res) => {
   try {
     const userMessage = req.body.message;
 
     const chatResponse = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-4o',
       messages: [{ role: 'user', content: userMessage }]
     });
 
@@ -28,10 +29,21 @@ app.post('/api/chat', async (req, res) => {
     res.json({ reply });
   } catch (err) {
     console.error('OpenAI Error:', err.message);
-    res.status(500).json({ reply: 'Error: Failed to get response from AI.' });
+    res.status(500).json({ reply: 'حدث خطأ في الاتصال بالذكاء الصناعي ❌' });
   }
 });
 
-app.listen(3000, () => {
-  console.log('✅ Server running on port 3000');
+// 📄 تقديم ملف index.html
+app.get('/', (req, res) => {
+  const indexPath = path.join(__dirname, 'index.html');
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    res.status(404).send('index.html not found');
+  }
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`✅ Server running on http://localhost:${PORT}`);
 });
