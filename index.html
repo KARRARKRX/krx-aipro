@@ -3,96 +3,129 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>KRX AI | المساعد الذكي</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>KRX AI – الدردشة الذكية</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-
-    * {
+    body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: 'Cairo', sans-serif;
-    }
-
-    body {
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-      color: #fff;
-      min-height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f172a;
+      color: white;
       display: flex;
-      justify-content: center;
-      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    header {
+      padding: 15px;
+      background: #1e293b;
       text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+      border-bottom: 1px solid #334155;
+    }
+
+    #chat-box {
+      flex: 1;
       padding: 20px;
+      overflow-y: auto;
     }
 
-    .container {
-      max-width: 600px;
-      background: rgba(255,255,255,0.05);
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 0 30px rgba(0,0,0,0.3);
-      backdrop-filter: blur(10px);
-      animation: fadeIn 1.2s ease-in-out;
+    .message {
+      margin-bottom: 15px;
+      padding: 10px 15px;
+      border-radius: 12px;
+      max-width: 80%;
+      line-height: 1.5;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .user {
+      background-color: #2563eb;
+      align-self: flex-end;
+      margin-left: auto;
     }
 
-    .container img {
-      width: 100px;
-      margin-bottom: 20px;
+    .bot {
+      background-color: #334155;
+      align-self: flex-start;
+      margin-right: auto;
     }
 
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 10px;
+    #chat-form {
+      display: flex;
+      padding: 15px;
+      border-top: 1px solid #334155;
+      background: #1e293b;
     }
 
-    p {
-      font-size: 1.1rem;
-      color: #ccc;
-      margin-bottom: 30px;
-    }
-
-    .start-btn {
-      padding: 12px 30px;
-      background-color: #00c9ff;
+    #user-input {
+      flex: 1;
+      padding: 10px 15px;
       border: none;
       border-radius: 8px;
-      color: #fff;
       font-size: 1rem;
+      margin-left: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #22d3ee;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
-      transition: 0.3s;
+      font-weight: bold;
+      color: #0f172a;
     }
 
-    .start-btn:hover {
-      background-color: #009fd4;
-    }
-
-    .footer {
-      margin-top: 30px;
-      font-size: 0.9rem;
-      color: #aaa;
-    }
-
-    .footer a {
-      color: #00c9ff;
-      text-decoration: none;
+    button:hover {
+      background-color: #0ea5e9;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <img src="logo.png" alt="KRX AI Logo" />
-    <h1>مرحبا بك في KR-X AI</h1>
-    <p>مساعدك الذكي بلغتك، بأسلوبك، وبدون حدود. اسأل ما تريد!</p>
-    <button class="start-btn" onclick="location.href='chat.html'">🚀 جرب الآن</button>
-    <div class="footer">
-      صنع بحب بواسطة <a href="https://instagram.com/k1.fo" target="_blank">Karrar Alabdali</a>
-    </div>
-  </div>
+  <header>💬 KRX AI</header>
+
+  <div id="chat-box"></div>
+
+  <form id="chat-form">
+    <input type="text" id="user-input" placeholder="اكتب رسالتك هنا..." autocomplete="off" required />
+    <button type="submit">إرسال</button>
+  </form>
+
+  <script>
+    const chatBox = document.getElementById("chat-box");
+    const chatForm = document.getElementById("chat-form");
+    const userInput = document.getElementById("user-input");
+
+    chatForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const message = userInput.value.trim();
+      if (!message) return;
+
+      appendMessage("أنت", message, "user");
+      userInput.value = "";
+
+      try {
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message })
+        });
+
+        const data = await res.json();
+        appendMessage("KRX AI", data.reply || "لم أتمكن من الرد 😔", "bot");
+      } catch (err) {
+        appendMessage("KRX AI", "حدث خطأ أثناء الاتصال بالسيرفر ❌", "bot");
+      }
+    });
+
+    function appendMessage(sender, message, type) {
+      const msgDiv = document.createElement("div");
+      msgDiv.className = `message ${type}`;
+      msgDiv.textContent = `${sender}: ${message}`;
+      chatBox.appendChild(msgDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  </script>
 </body>
 </html>
