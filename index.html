@@ -1,67 +1,98 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>KRX AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KRX AI | المساعد الذكي</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    body {
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+    * {
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #1a1a2e, #16213e);
-      color: white;
-      text-align: center;
-      direction: rtl;
+      box-sizing: border-box;
+      font-family: 'Cairo', sans-serif;
     }
 
-    #landing {
-      height: 100vh;
+    body {
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
+      min-height: 100vh;
       display: flex;
-      flex-direction: column;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
     }
 
-    #landing img {
-      width: 120px;
+    .container {
+      max-width: 600px;
+      background: rgba(255,255,255,0.05);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.3);
+      backdrop-filter: blur(10px);
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container img {
+      width: 100px;
       margin-bottom: 20px;
     }
 
     h1 {
-      font-size: 2.5rem;
-      margin: 10px 0;
+      font-size: 2.2rem;
+      margin-bottom: 10px;
     }
 
     p {
       font-size: 1.1rem;
       color: #ccc;
+      margin-bottom: 30px;
     }
 
     .start-btn {
-      margin-top: 30px;
-      padding: 12px 25px;
-      font-size: 1rem;
+      padding: 12px 30px;
       background-color: #00c9ff;
       border: none;
-      color: white;
       border-radius: 8px;
+      color: #fff;
+      font-size: 1rem;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: 0.3s;
     }
 
     .start-btn:hover {
       background-color: #009fd4;
     }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 0.9rem;
+      color: #aaa;
+    }
+
+    .footer a {
+      color: #00c9ff;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
-  <div id="landing">
+  <div class="container">
     <img src="logo.png" alt="KRX AI Logo" />
     <h1>مرحبا بك في KR-X AI</h1>
-    <p>مساعدك الذكي بلغتك وبأسلوبك. جاهز لكل سؤال ✨</p>
-    <button class="start-btn" onclick="location.href='index.html'">جرب الآن</button>
+    <p>مساعدك الذكي بلغتك، بأسلوبك، وبدون حدود. اسأل ما تريد!</p>
+    <button class="start-btn" onclick="location.href='chat.html'">🚀 جرب الآن</button>
+    <div class="footer">
+      صنع بحب بواسطة <a href="https://instagram.com/k1.fo" target="_blank">Karrar Alabdali</a>
+    </div>
   </div>
 </body>
 </html>

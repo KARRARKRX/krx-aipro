@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>KRX AI - المحادثة</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    header {
+      background-color: #0f3460;
+      padding: 15px;
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    #chat-box {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .message {
+      background-color: #1a1a2e;
+      padding: 12px 15px;
+      border-radius: 10px;
+      max-width: 80%;
+    }
+
+    .user {
+      align-self: flex-end;
+      background-color: #00c9ff;
+      color: black;
+    }
+
+    .bot {
+      align-self: flex-start;
+      background-color: #16213e;
+    }
+
+    footer {
+      padding: 10px;
+      background-color: #0f3460;
+      display: flex;
+      gap: 10px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      background-color: #00c9ff;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #009fd4;
+    }
+  </style>
+</head>
+<body>
+  <header>💬 KRX AI - محادثتك الذكية</header>
+
+  <div id="chat-box">
+    <div class="message bot">أهلاً بيك! شنو تحب تسأل؟</div>
+  </div>
+
+  <footer>
+    <input type="text" id="userInput" placeholder="اكتب سؤالك هنا..." />
+    <button onclick="sendMessage()">إرسال</button>
+  </footer>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const text = input.value.trim();
+      if (!text) return;
+
+      const chatBox = document.getElementById("chat-box");
+
+      const userMsg = document.createElement("div");
+      userMsg.className = "message user";
+      userMsg.innerText = text;
+      chatBox.appendChild(userMsg);
+
+      const botMsg = document.createElement("div");
+      botMsg.className = "message bot";
+      botMsg.innerText = "جاري التفكير... 🤔"; // لاحقًا تربطه بالذكاء
+
+      chatBox.appendChild(botMsg);
+      input.value = "";
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      // مكان استبداله بالرد الحقيقي
+      setTimeout(() => {
+        botMsg.innerText = "هذه إجابة مؤقتة! ✨";
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
