@@ -1,7 +1,6 @@
 {
   "name": "krx-ai-app",
   "version": "1.0.0",
-  "type": "module",
   "description": "KRX AI Arabic Chat App",
   "main": "server.js",
   "scripts": {

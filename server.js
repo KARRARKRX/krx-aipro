@@ -1,17 +1,13 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import OpenAI from 'openai';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import fs from 'fs';
+const express = require('express');
+const dotenv = require('dotenv');
+const OpenAI = require('openai');
+const path = require('path');
+const fs = require('fs');
 
 dotenv.config();
 
 const app = express();
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 app.use(express.json());
 
